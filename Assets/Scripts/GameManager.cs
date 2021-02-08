@@ -6,68 +6,175 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    // 敵の手を表す配列
-    public GameObject[] Janken = new GameObject[6];
-    int number;
+    // 問題を表す配列
+    public GameObject[] EnglishWord = new GameObject[6];
+    // 選択肢1を表す配列
+    public GameObject[] EnglishSelect_1 = new GameObject[6];
+    // 選択肢2を表す配列
+    public GameObject[] EnglishSelect_2 = new GameObject[6];
+    // 選択肢3を表す配列
+    public GameObject[] EnglishSelect_3 = new GameObject[6];
+    int Number;
+    int SelectNumber;
+    int number_answer;
+    int number_select_1;
+    int number_select_2;
+    int number_select_3;
     public static int GoodScore = 0;
     public static int BadScore = 0;
     public static int TotalCount = 0;
     public static double Percentage = 0;
 
-    public bool doesHyojiWinGoo;
-    public bool doesHyojiWinChoki;
-    public bool doesHyojiWinPaa;
-    public bool doesHyojiLoseGoo;
-    public bool doesHyojiLoseChoki;
-    public bool doesHyojiLosePaa;
+    public bool doesHyojiWent;
+    public bool doesHyojiShowed;
+    public bool doesHyojiKnew;
+    public bool doesHyojiFelt;
+    public bool doesHyojiSaw;
+    public bool doesHyojiListened;
+    // public bool doesHyoji_1;
+    // public bool doesHyoji_5;
 
-    // numberの値を0～2の中からランダムで決める
-    void randomimg()
+    // numberの値を0～5の中からランダムで決める
+    void Randomimg()
     {
-        number = Random.Range(0, Janken.Length);
+        Number = Random.Range(0, EnglishWord.Length);
+        SelectNumber = Random.Range(0, EnglishWord.Length);
     }
+    // 選択肢を決める
+    void SelectRandoming()
+    {
+        if(Number > 4)
+        {
+            // doesHyoji_5 = true;
+            SelectNumber = Random.Range(Number - 5, Number);
+        }
+        else
+        {
+            // doesHyoji_1 = true;
+            SelectNumber = Random.Range(0, 6);
+        }
+        
+    }
+    // 選択肢表示
+    /* void ShowSelect(int Number, int SelectNumber)
+    {
+        number_answer = Number;
+        number_select_1 = SelectNumber;
+        EnglishSelect_1[number_select_1].SetActive(true);
+        SelectRandoming();
+        number_select_2 = SelectNumber;
+        while(number_select_2 == number_select_1)
+        {
+            SelectRandoming();
+            number_select_2 = SelectNumber;
+        }
+        EnglishSelect_2[number_select_2].SetActive(true);
+        SelectRandoming();
+        number_select_3 = SelectNumber;
+        while(number_select_3 == number_select_1 || number_select_3 == number_select_2)
+        {
+            if(number_select_1 != number_answer && number_select_2 != number_answer)
+            {
+                number_select_3 = number_answer;
+                break;
+            }
+            SelectRandoming();
+            number_select_3 = SelectNumber;
+        }
+        EnglishSelect_3[number_select_3].SetActive(true);
+    }*/
 
     // Start is called before the first frame update
     void Start()
     {
-        doesHyojiWinGoo = false;
-        doesHyojiWinChoki = false;
-        doesHyojiWinPaa = false;
-        doesHyojiLoseGoo = false;
-        doesHyojiLoseChoki = false;
-        doesHyojiLosePaa = false;
-        Janken[0].SetActive(false);
-        Janken[1].SetActive(false);
-        Janken[2].SetActive(false);
-        Janken[3].SetActive(false);
-        Janken[4].SetActive(false);
-        Janken[5].SetActive(false);
+        doesHyojiWent = false;
+        doesHyojiShowed = false;
+        doesHyojiKnew = false;
+        doesHyojiFelt = false;
+        doesHyojiSaw = false;
+        doesHyojiListened = false;
+        // doesHyoji_1 = false;
+        // doesHyoji_5 = false;
+        EnglishWord[0].SetActive(false);
+        EnglishWord[1].SetActive(false);
+        EnglishWord[2].SetActive(false);
+        EnglishWord[3].SetActive(false);
+        EnglishWord[4].SetActive(false);
+        EnglishWord[5].SetActive(false);
+        EnglishSelect_1[0].SetActive(false);
+        EnglishSelect_1[1].SetActive(false);
+        EnglishSelect_1[2].SetActive(false);
+        EnglishSelect_1[3].SetActive(false);
+        EnglishSelect_1[4].SetActive(false);
+        EnglishSelect_1[5].SetActive(false);
+        EnglishSelect_2[0].SetActive(false);
+        EnglishSelect_2[1].SetActive(false);
+        EnglishSelect_2[2].SetActive(false);
+        EnglishSelect_2[3].SetActive(false);
+        EnglishSelect_2[4].SetActive(false);
+        EnglishSelect_2[5].SetActive(false);
+        EnglishSelect_3[0].SetActive(false);
+        EnglishSelect_3[1].SetActive(false);
+        EnglishSelect_3[2].SetActive(false);
+        EnglishSelect_3[3].SetActive(false);
+        EnglishSelect_3[4].SetActive(false);
+        EnglishSelect_3[5].SetActive(false);
 
-        randomimg();
-        Janken[number].SetActive(true);// number=0の時に青グーの画像、1で青チョキ、2で青パー、3で赤グー、4で赤チョキ、5で赤パーを表示する
-        if (number == 0)
+        Randomimg();
+        EnglishWord[Number].SetActive(true);// Number=1の時にWentを表示する
+        // ShowSelect(Number, SelectNumber);
+        ///////////////////////////////////////////////////////
+        number_answer = Number;
+        number_select_1 = SelectNumber;
+        EnglishSelect_1[number_select_1].SetActive(true);
+        SelectRandoming();
+        number_select_2 = SelectNumber;
+        while(number_select_2 == number_select_1)
         {
-            doesHyojiWinGoo = true;
+            SelectRandoming();
+            number_select_2 = SelectNumber;
         }
-        else if (number == 1)
+        EnglishSelect_2[number_select_2].SetActive(true);
+        SelectRandoming();
+        number_select_3 = SelectNumber;
+        if(number_select_1 != number_answer && number_select_2 != number_answer)
         {
-            doesHyojiWinChoki = true;
+            number_select_3 = number_answer;
         }
-        else if (number == 2)
+        else
         {
-            doesHyojiWinPaa = true;
+            while(number_select_3 == number_select_1 || number_select_3 == number_select_2)
+            {
+                SelectRandoming();
+                number_select_3 = SelectNumber;
+            }
         }
-        else if (number == 3)
+
+        EnglishSelect_3[number_select_3].SetActive(true);
+        /////////////////////////////////////////////////////////
+        if (Number == 0)
         {
-            doesHyojiLoseGoo = true;
+            doesHyojiWent = true;
         }
-        else if (number == 4)
+        else if (Number == 1)
         {
-            doesHyojiLoseChoki = true;
+            doesHyojiShowed = true;
         }
-        else if (number == 5)
+        else if (Number == 2)
         {
-            doesHyojiLosePaa = true;
+            doesHyojiKnew = true;
+        }
+        else if (Number == 3)
+        {
+            doesHyojiFelt = true;
+        }
+        else if (Number == 4)
+        {
+            doesHyojiSaw = true;
+        }
+        else if (Number == 5)
+        {
+            doesHyojiListened = true;
         }
     }
 
@@ -77,56 +184,83 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void JankenStart()
+    public void GameStart()
     {
-        doesHyojiWinGoo = false;
-        doesHyojiWinChoki = false;
-        doesHyojiWinPaa = false;
-        doesHyojiLoseGoo = false;
-        doesHyojiLoseChoki = false;
-        doesHyojiLosePaa = false;
+        doesHyojiWent = false;
+        doesHyojiShowed = false;
+        doesHyojiKnew = false;
+        doesHyojiFelt = false;
+        doesHyojiSaw = false;
+        doesHyojiListened = false;
 
-        Janken[number].SetActive(false);
-        randomimg();
-        Janken[number].SetActive(true);
-        if (number == 0)
+        EnglishWord[Number].SetActive(false);
+        EnglishSelect_1[number_select_1].SetActive(false);
+        EnglishSelect_2[number_select_2].SetActive(false);
+        EnglishSelect_3[number_select_3].SetActive(false);
+        Randomimg();
+        EnglishWord[Number].SetActive(true);
+        // ShowSelect(Number, SelectNumber);
+        ///////////////////////////////////////////////////////
+        number_answer = Number;
+        number_select_1 = SelectNumber;
+        EnglishSelect_1[number_select_1].SetActive(true);
+        SelectRandoming();
+        number_select_2 = SelectNumber;
+        while(number_select_2 == number_select_1)
         {
-            doesHyojiWinGoo = true;
+            SelectRandoming();
+            number_select_2 = SelectNumber;
         }
-        else if (number == 1)
+        EnglishSelect_2[number_select_2].SetActive(true);
+        SelectRandoming();
+        number_select_3 = SelectNumber;
+        if(number_select_1 != number_answer && number_select_2 != number_answer)
         {
-            doesHyojiWinChoki = true;
+            number_select_3 = number_answer;
         }
-        else if (number == 2)
+        else
         {
-            doesHyojiWinPaa = true;
+            while(number_select_3 == number_select_1 || number_select_3 == number_select_2)
+            {
+                SelectRandoming();
+                number_select_3 = SelectNumber;
+            }
         }
-        else if (number == 3)
+        EnglishSelect_3[number_select_3].SetActive(true);
+        /////////////////////////////////////////////////////////
+        if (Number == 0)
         {
-            doesHyojiLoseGoo = true;
+            doesHyojiWent = true;
         }
-        else if (number == 4)
+        else if (Number == 1)
         {
-            doesHyojiLoseChoki = true;
+            doesHyojiShowed = true;
         }
-        else if (number == 5)
+        else if (Number == 2)
         {
-            doesHyojiLosePaa = true;
+            doesHyojiKnew = true;
+        }
+        else if (Number == 3)
+        {
+            doesHyojiFelt = true;
+        }
+        else if (Number == 4)
+        {
+            doesHyojiSaw = true;
+        }
+        else if (Number == 5)
+        {
+            doesHyojiListened = true;
         }
     }
 
-    public void PushButtonGoo()
+    public void PushButtonGo()
     {
         TotalCount++;
-        if (doesHyojiWinChoki == true)
+        if (doesHyojiWent == true)
         {
             GoodScore++;
-            JankenStart();
-        }
-        else if(doesHyojiLosePaa == true)
-        {
-            GoodScore++;
-            JankenStart();
+            GameStart();
         }
         else
         {
@@ -134,18 +268,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PushButtonChoki()
+    public void PushButtonShow()
     {
         TotalCount++;
-        if (doesHyojiWinPaa == true)
+        if (doesHyojiShowed == true)
         {
             GoodScore++;
-            JankenStart();
-        }
-        else if (doesHyojiLoseGoo == true)
-        {
-            GoodScore++;
-            JankenStart();
+            GameStart();
         }
         else
         {
@@ -153,18 +282,55 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PushButtonPaa()
+    public void PushButtonKnow()
     {
         TotalCount++;
-        if (doesHyojiWinGoo == true)
+        if (doesHyojiKnew == true)
         {
             GoodScore++;
-            JankenStart();
+            GameStart();
         }
-        else if (doesHyojiLoseChoki == true)
+        else
+        {
+            BadScore++;
+        }
+    }
+
+    public void PushButtonFeel()
+    {
+        TotalCount++;
+        if (doesHyojiFelt == true)
         {
             GoodScore++;
-            JankenStart();
+            GameStart();
+        }
+        else
+        {
+            BadScore++;
+        }
+    }
+
+    public void PushButtonSee()
+    {
+        TotalCount++;
+        if (doesHyojiSaw == true)
+        {
+            GoodScore++;
+            GameStart();
+        }
+        else
+        {
+            BadScore++;
+        }
+    }
+
+    public void PushButtonListen()
+    {
+        TotalCount++;
+        if (doesHyojiListened == true)
+        {
+            GoodScore++;
+            GameStart();
         }
         else
         {
